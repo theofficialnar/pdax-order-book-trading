@@ -1,0 +1,13 @@
+{
+  "name": "Nar Cuenca",
+  "balances": [
+    {
+      "symbol": "PHP",
+      "balance": 10000
+    },
+    {
+      "symbol": "TestCoin",
+      "balance": 3500
+    }
+  ]
+}

@@ -1,6 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./store/reducers/rootReducer";
 
-const Index = () => <h1>Hello world!</h1>;
+import Home from "./views/Home";
+import "./index.css";
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const Index = () => <Home />;
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Index />
+  </Provider>,
+  document.getElementById("index")
+);
