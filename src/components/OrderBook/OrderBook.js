@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 
 import Asks from "./Asks";
 import Bids from "./Bids";
+import formatNumber from "../../utils/formatNumber";
 
 const styles = theme => ({
   paper: {
@@ -26,7 +27,9 @@ const OrderBook = ({ classes, orderBook }) => {
             <Divider />
           </Grid>
           <Asks data={orderBook.asks} />
-          <Typography variant="h6">Spread: {orderBook.spread}</Typography>
+          <Typography variant="h6">
+            Spread: {formatNumber(orderBook.spread)}
+          </Typography>
           <Bids data={orderBook.bids} />
         </Grid>
       </Paper>

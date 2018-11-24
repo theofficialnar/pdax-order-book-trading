@@ -22,27 +22,37 @@ export const fetchOrderBook = () => {
   const sortedAsks = asks.sort((a, b) => a.price < b.price);
 
   // calculate spread and round to 4 decimal places
-  const spread = (
-    sortedAsks[sortedAsks.length - 1].price - sortedBids[0].price
-  ).toFixed(4);
+  const spread = sortedAsks[sortedAsks.length - 1].price - sortedBids[0].price;
 
   return {
     type: "FETCH_ORDER_BOOK",
     payload: {
       bids: sortedBids,
       asks: sortedAsks,
-      spread
+      spread,
+      counter: arr.length + 1
     }
   };
 };
 
-export const placeAskOrder = () => {
-  // limit sell
-  // if type sell
-  // check bid prices
-  //   if sell price >= closest bid price
-  //     proceed
-  //     user balance php++ and tnc--
-  //   else if no matches
-  //     sell -> add to table
+export const placeAskOrder = (price, volume, total) => {
+  return {
+    type: "PLACE_ASK_ORDER",
+    payload: {
+      price,
+      volume,
+      total
+    }
+  };
+};
+
+export const placeBidOrder = (price, volume, total) => {
+  return {
+    type: "PLACE_BID_ORDER",
+    payload: {
+      price,
+      volume,
+      total
+    }
+  };
 };

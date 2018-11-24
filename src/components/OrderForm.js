@@ -7,6 +7,12 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+
+import {
+  placeAskOrder,
+  placeBidOrder
+} from "../store/actions/orderBookActions";
 
 const styles = theme => ({
   root: {
@@ -37,12 +43,19 @@ class OrderForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.closeForm = this.closeForm.bind(this);
+    this.submitOrder = this.submitOrder.bind(this);
   }
 
   handleChange(e) {
-    this.setState({
-      [e.target.name]: parseFloat(e.target.value)
-    });
+    if (e.target.name !== "type") {
+      this.setState({
+        [e.target.name]: parseFloat(e.target.value)
+      });
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
 
     switch (e.target.name) {
       case "price":
@@ -61,6 +74,32 @@ class OrderForm extends Component {
         this.setState({
           volume: parseFloat(e.target.value) / this.state.price
         });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  submitOrder() {
+    console.log(this.state.type);
+    switch (this.state.type) {
+      case "ask":
+        this.props.placeAskOrder(
+          this.state.price,
+          this.state.volume,
+          this.state.total
+        );
+        this.closeForm();
+        break;
+
+      case "bid":
+        this.props.placeBidOrder(
+          this.state.price,
+          this.state.volume,
+          this.state.total
+        );
+        this.closeForm();
         break;
 
       default:
@@ -150,6 +189,7 @@ class OrderForm extends Component {
                 color="primary"
                 size="large"
                 className={classes.button}
+                onClick={this.submitOrder}
               >
                 Submit Order
               </Button>
@@ -169,4 +209,14 @@ class OrderForm extends Component {
   }
 }
 
-export default withStyles(styles)(OrderForm);
+const mapDispatchToProps = dispatch => ({
+  placeAskOrder: (price, volume, total) =>
+    dispatch(placeAskOrder(price, volume, total)),
+  placeBidOrder: (price, volume, total) =>
+    dispatch(placeBidOrder(price, volume, total))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles)(OrderForm));
