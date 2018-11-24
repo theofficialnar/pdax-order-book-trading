@@ -4,11 +4,11 @@ import Grid from "@material-ui/core/Grid";
 
 import OrderTable from "../UI/OrderTable";
 
-const Bids = () => {
+const Bids = ({ data }) => {
   return (
     <Grid item xs={12}>
       <Typography variant="h6">Bids</Typography>
-      <OrderTable />
+      <OrderTable data={data} />
     </Grid>
   );
 };

@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
 import { fetchUser } from "../store/actions/userActions";
+import { fetchOrderBook } from "../store/actions/orderBookActions";
 import UserInfo from "../components/UserInfo";
 import OrderBook from "../components/OrderBook/OrderBook";
 import Orders from "../components/Orders";
@@ -18,16 +19,17 @@ const styles = {
 class Home extends Component {
   componentDidMount() {
     this.props.fetchUser();
+    this.props.fetchOrderBook();
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, orderBook } = this.props;
     return (
       <React.Fragment>
         <UserInfo user={this.props.user} />
         <div className={classes.root}>
           <Grid container spacing={24}>
-            <OrderBook />
+            <OrderBook orderBook={orderBook} />
             <Orders />
           </Grid>
         </div>
@@ -38,15 +40,18 @@ class Home extends Component {
 
 Home.propTypes = {
   user: PropTypes.object,
-  fetchUser: PropTypes.func
+  fetchUser: PropTypes.func,
+  fetchOrderBook: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  orderBook: state.orderBook
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(fetchUser())
+  fetchUser: () => dispatch(fetchUser()),
+  fetchOrderBook: () => dispatch(fetchOrderBook())
 });
 
 export default connect(

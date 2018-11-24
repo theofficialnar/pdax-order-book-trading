@@ -6,7 +6,14 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-const OrderTable = () => {
+const OrderTable = ({ data }) => {
+  const rows = data.map(i => (
+    <TableRow key={i.id}>
+      <TableCell>{i.id}</TableCell>
+      <TableCell>{i.price.toLocaleString()}</TableCell>
+      <TableCell>{i.volume.toLocaleString()}</TableCell>
+    </TableRow>
+  ));
   return (
     <Paper elevation={0}>
       <Table>
@@ -17,13 +24,7 @@ const OrderTable = () => {
             <TableCell>Volume</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>Name 1</TableCell>
-            <TableCell>1000</TableCell>
-            <TableCell>89700</TableCell>
-          </TableRow>
-        </TableBody>
+        <TableBody>{rows}</TableBody>
       </Table>
     </Paper>
   );

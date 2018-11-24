@@ -14,7 +14,7 @@ const styles = theme => ({
   }
 });
 
-const OrderBook = ({ classes }) => (
+const OrderBook = ({ classes, orderBook }) => (
   <Grid item xs={7}>
     <Paper elevation={1} className={classes.paper}>
       <Grid container spacing={24}>
@@ -24,8 +24,8 @@ const OrderBook = ({ classes }) => (
           </Typography>
           <Divider />
         </Grid>
-        <Asks />
-        <Bids />
+        <Asks data={orderBook.asks} />
+        <Bids data={orderBook.bids} />
       </Grid>
     </Paper>
   </Grid>
