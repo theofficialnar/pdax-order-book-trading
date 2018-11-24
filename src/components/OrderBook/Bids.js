@@ -5,15 +5,17 @@ import Grid from "@material-ui/core/Grid";
 import OrderTable from "../UI/OrderTable";
 
 const Bids = ({ data }) => {
-  const tableHeaders = ["Total", "Price (PHP)", "Volume (Test Coin)"];
+  const tableHeaders = ["Total", "Volume (Test Coin)", "Price (PHP)"];
   return (
     <Grid item xs={12}>
       <OrderTable
         tableData={data}
         tableHeaders={tableHeaders}
-        type="orderBook"
+        type="orderBookBids"
       />
-      <Typography variant="h6">Bids</Typography>
+      <Typography variant="h6" align="center">
+        Bids
+      </Typography>
     </Grid>
   );
 };

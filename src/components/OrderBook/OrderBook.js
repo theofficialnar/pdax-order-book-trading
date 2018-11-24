@@ -27,9 +27,11 @@ const OrderBook = ({ classes, orderBook }) => {
             <Divider />
           </Grid>
           <Asks data={orderBook.asks} />
-          <Typography variant="h6">
-            Spread: {formatNumber(orderBook.spread)}
-          </Typography>
+          <Grid item xs={12}>
+            <Typography variant="h6" align="center">
+              Spread: {formatNumber(orderBook.spread)}
+            </Typography>
+          </Grid>
           <Bids data={orderBook.bids} />
         </Grid>
       </Paper>

@@ -23,9 +23,9 @@ const Orders = ({ classes, orders: { openOrders, closedOrders } }) => (
             Orders
           </Typography>
           <Divider />
-          <OpenOrders data={openOrders} />
-          <ClosedOrders data={closedOrders} />
         </Grid>
+        <OpenOrders data={openOrders} />
+        <ClosedOrders data={closedOrders} />
       </Grid>
     </Paper>
   </Grid>

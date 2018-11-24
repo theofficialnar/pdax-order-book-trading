@@ -10,6 +10,7 @@ import UserInfo from "../components/UserInfo";
 import OrderBook from "../components/OrderBook/OrderBook";
 import Orders from "../components/Orders/Orders";
 import OrderForm from "../components/OrderForm";
+import Footer from "../components/Footer";
 
 const styles = {
   root: {
@@ -56,6 +57,7 @@ class Home extends Component {
           open={drawer}
           toggleDrawer={open => this.toggleDrawer(open)}
         />
+        <Footer />
       </React.Fragment>
     );
   }

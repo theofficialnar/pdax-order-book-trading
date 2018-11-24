@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import OrderTable from "../UI/OrderTable";
 
 const OpenOrders = ({ data }) => {
-  const tableHeaders = ["Price", "Volume", "Type"];
+  const tableHeaders = ["Price (PHP)", "Volume (Test Coin)", "Type"];
   return (
     <Grid item xs={12}>
       <Typography variant="h6">Open Orders</Typography>
