@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 
 const OrderTable = () => {
   return (
-    <Paper elevation="0">
+    <Paper elevation={0}>
       <Table>
         <TableHead>
           <TableRow>

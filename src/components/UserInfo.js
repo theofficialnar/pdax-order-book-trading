@@ -32,8 +32,8 @@ const UserInfo = ({ user: { name, balances }, classes }) => (
           Balance
         </Typography>
         {balances.map(item => (
-          <Typography variant="body2" align="center">
-            {item.symbol}: {item.balance}
+          <Typography variant="body2" align="center" key={item.symbol}>
+            {item.symbol}: {item.balance.toLocaleString()}
           </Typography>
         ))}
       </Grid>
