@@ -7,7 +7,7 @@ const initState = {
 const orderBookReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_ORDER_BOOK":
-      console.log(action.type);
+      console.log(action.type, action);
       return Object.assign({}, state, {
         asks: action.payload.asks,
         bids: action.payload.bids,
