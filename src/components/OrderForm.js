@@ -13,6 +13,7 @@ import {
   placeAskOrder,
   placeBidOrder
 } from "../store/actions/orderBookActions";
+import { sellCoin, buyCoin } from "../store/actions/userActions";
 
 const styles = theme => ({
   root: {
@@ -28,7 +29,8 @@ const styles = theme => ({
   },
   button: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 3
   }
 });
 
@@ -82,7 +84,6 @@ class OrderForm extends Component {
   }
 
   submitOrder() {
-    console.log(this.state.type);
     switch (this.state.type) {
       case "ask":
         this.props.placeAskOrder(
@@ -90,6 +91,7 @@ class OrderForm extends Component {
           this.state.volume,
           this.state.total
         );
+        this.props.sellCoin(this.state.volume);
         this.closeForm();
         break;
 
@@ -99,6 +101,7 @@ class OrderForm extends Component {
           this.state.volume,
           this.state.total
         );
+        this.props.buyCoin(this.state.total);
         this.closeForm();
         break;
 
@@ -143,7 +146,7 @@ class OrderForm extends Component {
                 value={type}
                 onChange={this.handleChange}
                 name="type"
-                helperText="Please select the type of order"
+                helperText="Type of order"
                 variant="outlined"
                 className={classes.textField}
               >
@@ -162,6 +165,7 @@ class OrderForm extends Component {
                 type="number"
                 placeholder="0"
                 className={classes.textField}
+                helperText="Price per coin"
               />
               <TextField
                 label="Volume"
@@ -172,6 +176,7 @@ class OrderForm extends Component {
                 type="number"
                 placeholder="0"
                 className={classes.textField}
+                helperText="Total number of coins"
               />
               <TextField
                 label="Total"
@@ -182,25 +187,27 @@ class OrderForm extends Component {
                 type="number"
                 placeholder="0"
                 className={classes.textField}
+                helperText="Total amount in PHP"
               />
-              <br />
-              <Button
-                variant="outlined"
-                color="primary"
-                size="large"
-                className={classes.button}
-                onClick={this.submitOrder}
-              >
-                Submit Order
-              </Button>
-              <Button
-                color="secondary"
-                size="large"
-                className={classes.button}
-                onClick={this.closeForm}
-              >
-                Cancel
-              </Button>
+              <div>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  className={classes.button}
+                  onClick={this.submitOrder}
+                >
+                  Submit Order
+                </Button>
+                <Button
+                  color="secondary"
+                  size="large"
+                  className={classes.button}
+                  onClick={this.closeForm}
+                >
+                  Cancel
+                </Button>
+              </div>
             </form>
           </Grid>
         </Grid>
@@ -213,7 +220,9 @@ const mapDispatchToProps = dispatch => ({
   placeAskOrder: (price, volume, total) =>
     dispatch(placeAskOrder(price, volume, total)),
   placeBidOrder: (price, volume, total) =>
-    dispatch(placeBidOrder(price, volume, total))
+    dispatch(placeBidOrder(price, volume, total)),
+  buyCoin: php => dispatch(buyCoin(php)),
+  sellCoin: coin => dispatch(sellCoin(coin))
 });
 
 export default connect(

@@ -22,8 +22,8 @@ const OrderTable = ({ data }) => {
         <TableHead>
           <TableRow>
             <TableCell>Total</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Volume</TableCell>
+            <TableCell>Price (PHP)</TableCell>
+            <TableCell>Volume (Test Coin)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{rows}</TableBody>

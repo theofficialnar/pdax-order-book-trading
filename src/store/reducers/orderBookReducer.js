@@ -43,7 +43,10 @@ const orderBookReducer = (state = initState, action) => {
         });
         return Object.assign({}, state, {
           asks: state.asks,
-          bids: updatedBids
+          bids: updatedBids,
+          spread:
+            state.asks[state.asks.length - 1].price - updatedBids[0].price,
+          counter: state.counter
         });
       } else {
         // used to check if price already exists in asks list
@@ -51,6 +54,7 @@ const orderBookReducer = (state = initState, action) => {
           i => i.price == action.payload.price
         );
         let asks = [];
+        let counter = state.counter;
 
         // if price exists -> add the volume and total to the current price
         // if price doesn't exist -> add as a new item
@@ -79,13 +83,17 @@ const orderBookReducer = (state = initState, action) => {
               total: action.payload.total
             }
           ];
+          counter = state.counter + 1;
         }
 
         // sort asks list and return
         const updatedAsks = asks.sort((a, b) => a.price < b.price);
         return Object.assign({}, state, {
           asks: updatedAsks,
-          bids: state.bids
+          bids: state.bids,
+          spread:
+            updatedAsks[updatedAsks.length - 1].price - state.bids[0].price,
+          counter
         });
       }
 
@@ -117,7 +125,10 @@ const orderBookReducer = (state = initState, action) => {
         });
         return Object.assign({}, state, {
           asks: updatedAsks,
-          bids: state.bids
+          bids: state.bids,
+          spread:
+            updatedAsks[updatedAsks.length - 1].price - state.bids[0].price,
+          counter: state.counter
         });
       } else {
         // used to check if price already exists in bids list
@@ -125,6 +136,7 @@ const orderBookReducer = (state = initState, action) => {
           i => i.price == action.payload.price
         );
         let bids = [];
+        let counter = state.counter;
 
         // if price exists -> add the volume and total to the current price
         // if price doesn't exist -> add as a new item
@@ -153,13 +165,17 @@ const orderBookReducer = (state = initState, action) => {
               total: action.payload.total
             }
           ];
+          counter = state.counter + 1;
         }
 
         // sort bids list and return
         const updatedBids = bids.sort((a, b) => a.price < b.price);
         return Object.assign({}, state, {
           asks: state.asks,
-          bids: updatedBids
+          bids: updatedBids,
+          spread:
+            state.asks[state.asks.length - 1].price - updatedBids[0].price,
+          counter
         });
       }
 
