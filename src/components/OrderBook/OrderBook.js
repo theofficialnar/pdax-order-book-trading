@@ -14,21 +14,24 @@ const styles = theme => ({
   }
 });
 
-const OrderBook = ({ classes, orderBook }) => (
-  <Grid item xs={7}>
-    <Paper elevation={1} className={classes.paper}>
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Typography variant="h4" align="center" gutterBottom>
-            Order Book
-          </Typography>
-          <Divider />
+const OrderBook = ({ classes, orderBook }) => {
+  return (
+    <Grid item xs={7}>
+      <Paper elevation={1} className={classes.paper}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Typography variant="h4" align="center" gutterBottom>
+              Order Book
+            </Typography>
+            <Divider />
+          </Grid>
+          <Asks data={orderBook.asks} />
+          <Typography variant="h6">Spread: {orderBook.spread}</Typography>
+          <Bids data={orderBook.bids} />
         </Grid>
-        <Asks data={orderBook.asks} />
-        <Bids data={orderBook.bids} />
-      </Grid>
-    </Paper>
-  </Grid>
-);
+      </Paper>
+    </Grid>
+  );
+};
 
 export default withStyles(styles)(OrderBook);

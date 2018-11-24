@@ -7,8 +7,8 @@ import OrderTable from "../UI/OrderTable";
 const Bids = ({ data }) => {
   return (
     <Grid item xs={12}>
-      <Typography variant="h6">Bids</Typography>
       <OrderTable data={data} />
+      <Typography variant="h6">Bids</Typography>
     </Grid>
   );
 };

@@ -1,6 +1,7 @@
 const initState = {
   asks: [],
-  bids: []
+  bids: [],
+  spread: 0
 };
 
 const orderBookReducer = (state = initState, action) => {
@@ -9,7 +10,8 @@ const orderBookReducer = (state = initState, action) => {
       console.log(action.type);
       return Object.assign({}, state, {
         asks: action.payload.asks,
-        bids: action.payload.bids
+        bids: action.payload.bids,
+        spread: action.payload.spread
       });
 
     default:

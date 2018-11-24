@@ -24,6 +24,7 @@ class Home extends Component {
 
   render() {
     const { classes, orderBook } = this.props;
+    console.log(orderBook);
     return (
       <React.Fragment>
         <UserInfo user={this.props.user} />
