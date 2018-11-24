@@ -2,7 +2,9 @@ const initState = {
   asks: [],
   bids: [],
   spread: 0,
-  counter: 0
+  counter: 0,
+  openOrders: [],
+  closedOrders: []
 };
 
 const orderBookReducer = (state = initState, action) => {
@@ -13,7 +15,9 @@ const orderBookReducer = (state = initState, action) => {
         asks: action.payload.asks,
         bids: action.payload.bids,
         spread: action.payload.spread,
-        counter: action.payload.counter
+        counter: action.payload.counter,
+        openOrders: state.openOrders,
+        closedOrders: state.closedOrders
       });
 
     case "PLACE_ASK_ORDER":
@@ -42,11 +46,18 @@ const orderBookReducer = (state = initState, action) => {
           }
         });
         return Object.assign({}, state, {
-          asks: state.asks,
           bids: updatedBids,
           spread:
             state.asks[state.asks.length - 1].price - updatedBids[0].price,
-          counter: state.counter
+          closedOrders: [
+            ...state.closedOrders,
+            {
+              id: `order-${state.counter + 1}`,
+              price: action.payload.price,
+              volume: action.payload.volume,
+              type: action.payload.orderType
+            }
+          ]
         });
       } else {
         // used to check if price already exists in asks list
@@ -90,10 +101,18 @@ const orderBookReducer = (state = initState, action) => {
         const updatedAsks = asks.sort((a, b) => a.price < b.price);
         return Object.assign({}, state, {
           asks: updatedAsks,
-          bids: state.bids,
           spread:
             updatedAsks[updatedAsks.length - 1].price - state.bids[0].price,
-          counter
+          counter,
+          openOrders: [
+            ...state.openOrders,
+            {
+              id: `order-${state.counter + 1}`,
+              price: action.payload.price,
+              volume: action.payload.volume,
+              type: action.payload.orderType
+            }
+          ]
         });
       }
 
@@ -125,10 +144,17 @@ const orderBookReducer = (state = initState, action) => {
         });
         return Object.assign({}, state, {
           asks: updatedAsks,
-          bids: state.bids,
           spread:
             updatedAsks[updatedAsks.length - 1].price - state.bids[0].price,
-          counter: state.counter
+          closedOrders: [
+            ...state.closedOrders,
+            {
+              id: `order-${state.counter + 1}`,
+              price: action.payload.price,
+              volume: action.payload.volume,
+              type: action.payload.orderType
+            }
+          ]
         });
       } else {
         // used to check if price already exists in bids list
@@ -171,11 +197,19 @@ const orderBookReducer = (state = initState, action) => {
         // sort bids list and return
         const updatedBids = bids.sort((a, b) => a.price < b.price);
         return Object.assign({}, state, {
-          asks: state.asks,
           bids: updatedBids,
           spread:
             state.asks[state.asks.length - 1].price - updatedBids[0].price,
-          counter
+          counter,
+          openOrders: [
+            ...state.openOrders,
+            {
+              id: `order-${state.counter + 1}`,
+              price: action.payload.price,
+              volume: action.payload.volume,
+              type: action.payload.orderType
+            }
+          ]
         });
       }
 

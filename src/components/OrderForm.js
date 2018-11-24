@@ -89,7 +89,8 @@ class OrderForm extends Component {
         this.props.placeAskOrder(
           this.state.price,
           this.state.volume,
-          this.state.total
+          this.state.total,
+          this.state.type
         );
         this.props.sellCoin(this.state.volume);
         this.closeForm();
@@ -99,7 +100,8 @@ class OrderForm extends Component {
         this.props.placeBidOrder(
           this.state.price,
           this.state.volume,
-          this.state.total
+          this.state.total,
+          this.state.type
         );
         this.props.buyCoin(this.state.total);
         this.closeForm();
@@ -217,10 +219,10 @@ class OrderForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  placeAskOrder: (price, volume, total) =>
-    dispatch(placeAskOrder(price, volume, total)),
-  placeBidOrder: (price, volume, total) =>
-    dispatch(placeBidOrder(price, volume, total)),
+  placeAskOrder: (price, volume, total, orderType) =>
+    dispatch(placeAskOrder(price, volume, total, orderType)),
+  placeBidOrder: (price, volume, total, orderType) =>
+    dispatch(placeBidOrder(price, volume, total, orderType)),
   buyCoin: php => dispatch(buyCoin(php)),
   sellCoin: coin => dispatch(sellCoin(coin))
 });

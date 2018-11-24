@@ -8,7 +8,7 @@ import { fetchUser } from "../store/actions/userActions";
 import { fetchOrderBook } from "../store/actions/orderBookActions";
 import UserInfo from "../components/UserInfo";
 import OrderBook from "../components/OrderBook/OrderBook";
-import Orders from "../components/Orders";
+import Orders from "../components/Orders/Orders";
 import OrderForm from "../components/OrderForm";
 
 const styles = {
@@ -49,7 +49,7 @@ class Home extends Component {
         <div className={classes.root}>
           <Grid container spacing={24}>
             <OrderBook orderBook={orderBook} />
-            <Orders />
+            <Orders orders={orderBook} />
           </Grid>
         </div>
         <OrderForm

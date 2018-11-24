@@ -8,25 +8,36 @@ import Paper from "@material-ui/core/Paper";
 
 import formatNumber from "../../utils/formatNumber";
 
-const OrderTable = ({ data }) => {
-  const rows = data.map(i => (
-    <TableRow key={i.id}>
-      <TableCell>{formatNumber(i.total)}</TableCell>
-      <TableCell>{formatNumber(i.price)}</TableCell>
-      <TableCell>{formatNumber(i.volume)}</TableCell>
-    </TableRow>
+const OrderTable = ({ tableData, tableHeaders, type }) => {
+  let tableRows = undefined;
+  if (type === "orderBook") {
+    tableRows = tableData.map(i => (
+      <TableRow key={i.id}>
+        <TableCell>{formatNumber(i.total)}</TableCell>
+        <TableCell>{formatNumber(i.price)}</TableCell>
+        <TableCell>{formatNumber(i.volume)}</TableCell>
+      </TableRow>
+    ));
+  } else {
+    tableRows = tableData.map(i => (
+      <TableRow key={i.id}>
+        <TableCell>{formatNumber(i.price)}</TableCell>
+        <TableCell>{formatNumber(i.volume)}</TableCell>
+        <TableCell>{i.type}</TableCell>
+      </TableRow>
+    ));
+  }
+
+  const headers = tableHeaders.map((i, index) => (
+    <TableCell key={index}>{i}</TableCell>
   ));
   return (
     <Paper elevation={0}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>Total</TableCell>
-            <TableCell>Price (PHP)</TableCell>
-            <TableCell>Volume (Test Coin)</TableCell>
-          </TableRow>
+          <TableRow>{headers}</TableRow>
         </TableHead>
-        <TableBody>{rows}</TableBody>
+        <TableBody>{tableRows}</TableBody>
       </Table>
     </Paper>
   );

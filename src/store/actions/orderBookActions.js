@@ -35,10 +35,11 @@ export const fetchOrderBook = () => {
   };
 };
 
-export const placeAskOrder = (price, volume, total) => {
+export const placeAskOrder = (price, volume, total, orderType) => {
   return {
     type: "PLACE_ASK_ORDER",
     payload: {
+      orderType,
       price,
       volume,
       total
@@ -46,10 +47,11 @@ export const placeAskOrder = (price, volume, total) => {
   };
 };
 
-export const placeBidOrder = (price, volume, total) => {
+export const placeBidOrder = (price, volume, total, orderType) => {
   return {
     type: "PLACE_BID_ORDER",
     payload: {
+      orderType,
       price,
       volume,
       total
