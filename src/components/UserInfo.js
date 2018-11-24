@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   root: {
@@ -12,9 +13,9 @@ const styles = {
   }
 };
 
-const UserInfo = ({ user: { name, balances }, classes }) => (
+const UserInfo = ({ user: { name, balances }, classes, toggleDrawer }) => (
   <div className={classes.root}>
-    <Grid container spacing={24}>
+    <Grid container spacing={24} justify="center">
       <Grid item xs={12}>
         <Typography variant="h1" align="center" color="textSecondary">
           PDAX Order Book Trading
@@ -36,6 +37,11 @@ const UserInfo = ({ user: { name, balances }, classes }) => (
             {item.symbol}: {item.balance.toLocaleString()}
           </Typography>
         ))}
+      </Grid>
+      <Grid item>
+        <Button variant="outlined" onClick={() => toggleDrawer(true)}>
+          Place Order
+        </Button>
       </Grid>
     </Grid>
   </div>

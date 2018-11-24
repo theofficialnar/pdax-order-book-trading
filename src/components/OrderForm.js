@@ -1,0 +1,139 @@
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Divider from "@material-ui/core/Divider";
+
+const styles = theme => ({
+  root: {
+    padding: theme.spacing.unit * 5,
+    textAlign: "center"
+  },
+  container: {
+    margin: theme.spacing.unit * 5
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  }
+});
+
+class OrderForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      type: "",
+      price: 0,
+      volume: 0,
+      total: 0
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: parseFloat(e.target.value)
+    });
+
+    switch (e.target.name) {
+      case "price":
+        this.setState({
+          total: parseFloat(e.target.value) * this.state.volume
+        });
+        break;
+
+      case "volume":
+        this.setState({
+          total: parseFloat(e.target.value) * this.state.price
+        });
+        break;
+
+      case "total":
+        this.setState({
+          volume: parseFloat(e.target.value) / this.state.price
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  render() {
+    const { open, toggleDrawer, classes } = this.props;
+    const { type, price, volume, total } = this.state;
+
+    const types = [
+      { type: "ask", label: "Sell" },
+      { type: "bid", label: "Buy" }
+    ];
+
+    return (
+      <Drawer anchor="bottom" open={open} onClose={() => toggleDrawer(false)}>
+        <Grid container className={classes.root}>
+          <Grid item xs={12}>
+            <Typography variant="h5" gutterBottom>
+              Fill up all the fields below to place an order...
+            </Typography>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} className={classes.container}>
+            <form noValidate autoComplete="off">
+              <TextField
+                select
+                label="Type"
+                value={type}
+                onChange={this.handleChange}
+                name="type"
+                helperText="Please select the type of order"
+                variant="outlined"
+                className={classes.textField}
+              >
+                {types.map(i => (
+                  <MenuItem key={i.type} value={i.type}>
+                    {i.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                label="Price"
+                value={price}
+                name="price"
+                onChange={this.handleChange}
+                variant="outlined"
+                type="number"
+                placeholder="0"
+                className={classes.textField}
+              />
+              <TextField
+                label="Volume"
+                value={volume}
+                name="volume"
+                onChange={this.handleChange}
+                variant="outlined"
+                type="number"
+                placeholder="0"
+                className={classes.textField}
+              />
+              <TextField
+                label="Total"
+                value={total}
+                name="total"
+                onChange={this.handleChange}
+                variant="outlined"
+                type="number"
+                placeholder="0"
+                className={classes.textField}
+              />
+            </form>
+          </Grid>
+        </Grid>
+      </Drawer>
+    );
+  }
+}
+
+export default withStyles(styles)(OrderForm);
