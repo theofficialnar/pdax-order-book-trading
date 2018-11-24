@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
@@ -16,6 +17,10 @@ const styles = theme => ({
     margin: theme.spacing.unit * 5
   },
   textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  },
+  button: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   }
@@ -31,6 +36,7 @@ class OrderForm extends Component {
       total: 0
     };
     this.handleChange = this.handleChange.bind(this);
+    this.closeForm = this.closeForm.bind(this);
   }
 
   handleChange(e) {
@@ -62,8 +68,18 @@ class OrderForm extends Component {
     }
   }
 
+  closeForm() {
+    this.setState({
+      type: "",
+      price: 0,
+      volume: 0,
+      total: 0
+    });
+    this.props.toggleDrawer(false);
+  }
+
   render() {
-    const { open, toggleDrawer, classes } = this.props;
+    const { open, classes } = this.props;
     const { type, price, volume, total } = this.state;
 
     const types = [
@@ -72,7 +88,7 @@ class OrderForm extends Component {
     ];
 
     return (
-      <Drawer anchor="bottom" open={open} onClose={() => toggleDrawer(false)}>
+      <Drawer anchor="bottom" open={open} onClose={this.closeForm}>
         <Grid container className={classes.root}>
           <Grid item xs={12}>
             <Typography variant="h5" gutterBottom>
@@ -128,6 +144,23 @@ class OrderForm extends Component {
                 placeholder="0"
                 className={classes.textField}
               />
+              <br />
+              <Button
+                variant="outlined"
+                color="primary"
+                size="large"
+                className={classes.button}
+              >
+                Submit Order
+              </Button>
+              <Button
+                color="secondary"
+                size="large"
+                className={classes.button}
+                onClick={this.closeForm}
+              >
+                Cancel
+              </Button>
             </form>
           </Grid>
         </Grid>
